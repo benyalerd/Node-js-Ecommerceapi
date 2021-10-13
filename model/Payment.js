@@ -15,4 +15,4 @@ const Payment = mongoose.model('Payment', new mongoose.Schema({
    AccountNumber:String
 }));
 
-export default Payment;
+module.exports.Payment = Payment;

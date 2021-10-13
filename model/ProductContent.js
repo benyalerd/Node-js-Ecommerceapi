@@ -13,13 +13,10 @@ const ProductSKU = mongoose.model('ProductSKU', new mongoose.Schema({
     },
     MediaType:{
         type:Number,
-        enum:[1,2]
     },
     ImagePath:String,
     ContentType:{
         type:Number,
-        enum:[1,2,3,4]
     }   
 }));
-
-export default ProductSKU;
+module.exports.ProductSKU = ProductSKU;

@@ -5,11 +5,10 @@ const Promotion = mongoose.model('Promotion', new mongoose.Schema({
    startDate:Date,
    endDate:Date,
    type:{
-       type:Number,
-       enum:[1,2]
+       type:Number
    },
    discount:Number
   
 }));
 
-export default Promotion;
+module.exports.Promotion = Promotion;

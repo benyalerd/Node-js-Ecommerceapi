@@ -16,4 +16,4 @@ const Shipping = mongoose.model('Shipping', new mongoose.Schema({
     MinDay:Number
 }));
 
-export default Shipping;
+module.exports.Shipping = Shipping;

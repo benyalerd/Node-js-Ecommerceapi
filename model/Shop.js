@@ -21,4 +21,4 @@ shopName:String,
 CoverImg:String
 }));
 
-export default Shop;
+module.exports.Shop = Shop;

@@ -1,10 +1,8 @@
 const mongoose = require('mongoose');
-
 const Merchant = mongoose.model('Merchant', new mongoose.Schema({
 Role:{
     type:String,
-    enum:['Owner','Staff'],
-    require:true
+        require:true
 },
 password :{
     type:String,
@@ -13,22 +11,17 @@ password :{
 },
 salt :{
     type:String,
-    require:true,
-    maxlength:20
+    require:true
 },
 name :String,
 lastname:String,
 address:String,
 tel :{
-    type:String,
-    match:/((\+66|0)(\d{1,2}\-?\d{3}\-?\d{3,4}))|((\+๖๖|๐)([๐-๙]{1,2}\-?[๐-๙]{3}\-?[๐-๙]{3,4}))/
-},
+    type:String},
 email :{
-    type:String,
-    match:/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
-},
+    type:String},
 isActive:Boolean,
 isDelete:Boolean
 }));
 
-export default Merchant;
+module.exports.Merchant =  Merchant;

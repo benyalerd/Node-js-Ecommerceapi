@@ -38,4 +38,4 @@ const TransactionDetail = mongoose.model('TransactionDetail', new mongoose.Schem
     skuName:String
 }));
 
-export default TransactionDetail;
+module.exports.TransactionDetail = TransactionDetail;

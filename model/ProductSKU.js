@@ -11,4 +11,4 @@ const ProductSKU = mongoose.model('ProductSKU', new mongoose.Schema({
    value:Number
 }));
 
-export default ProductSKU;
+module.exports.ProductSKU = ProductSKU;
