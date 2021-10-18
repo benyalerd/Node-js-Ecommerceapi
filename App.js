@@ -4,11 +4,13 @@ const app = express();
 const winston = require('winston');
 const {logConfiguration} = require('./helper/logging/logging');
 const Login = require('./controller/loginController');
-const Register = require('./controller/registerController');
+const Register = require('./controller/merchantController');
+const Shop = require('./controller/shopController');
 const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use('/api/login', Login);
-app.use('/api/register', Register);
+app.use('/api/merchant', Register);
+app.use('/api/shop',Shop);
 const logger = winston.createLogger(logConfiguration);
 process.on('uncaughtException',(ex)=>{    
     logger.error(JSON.stringify(ex));

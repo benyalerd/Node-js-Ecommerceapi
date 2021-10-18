@@ -4,7 +4,7 @@ const Product = require('./Product');
 const ProductSKU = mongoose.model('ProductSKU', new mongoose.Schema({
     Product :{
         type: mongoose.Schema.Types.ObjectId,
-        ref: Product
+        ref: 'Product'
     },
    skuName:String,
    option:String,

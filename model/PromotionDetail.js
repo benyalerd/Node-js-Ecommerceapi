@@ -5,11 +5,11 @@ const Product = require('./Product');
 const PromotionDetail = mongoose.model('PromotionDetail', new mongoose.Schema({
     promotion :{
     type: mongoose.Schema.Types.ObjectId,
-    ref: Promotion
+    ref: 'Promotion'
 },
 product :{
     type: mongoose.Schema.Types.ObjectId,
-    ref: Product
+    ref: 'Product'
 }
 
 }));

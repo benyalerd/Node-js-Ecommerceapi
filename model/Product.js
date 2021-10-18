@@ -5,11 +5,11 @@ const Merchant = require('./Merchant');
 const Product = mongoose.model('Product', new mongoose.Schema({
     shop :{
         type: mongoose.Schema.Types.ObjectId,
-        ref: Shop
+        ref: 'Shop'
     },
     merchant :{
         type: mongoose.Schema.Types.ObjectId,
-        ref: Merchant
+        ref: 'Merchant'
     },
     isActive:Boolean,
     stock:{

@@ -7,15 +7,15 @@ const Sku = require('./ProductSKU');
 const TransactionDetail = mongoose.model('TransactionDetail', new mongoose.Schema({
     product :{
         type: mongoose.Schema.Types.ObjectId,
-        ref: Product
+        ref: 'Product'
     },
     transaction :{
         type: mongoose.Schema.Types.ObjectId,
-        ref: Transaction
+        ref: 'Transaction'
     },
     sku :{
         type: mongoose.Schema.Types.ObjectId,
-        ref: Sku
+        ref: 'Sku'
     },
     productImg:String,
     productName:String,

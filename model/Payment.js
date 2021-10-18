@@ -5,11 +5,11 @@ const Master = require('./Master');
 const Payment = mongoose.model('Payment', new mongoose.Schema({
     shop :{
         type: mongoose.Schema.Types.ObjectId,
-        ref: Shop
+        ref: 'Shop'
     },
     master :{
         type: mongoose.Schema.Types.ObjectId,
-        ref: Master
+        ref: 'Master'
     },
    AccountName:String,
    AccountNumber:String

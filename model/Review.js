@@ -6,15 +6,15 @@ const Customer = require('./Customer');
 const Review = mongoose.model('Review', new mongoose.Schema({
     Product :{
         type: mongoose.Schema.Types.ObjectId,
-        ref: Product
+        ref: 'Product'
     },
     Shop :{
         type: mongoose.Schema.Types.ObjectId,
-        ref: Shop
+        ref: 'Shop'
     },
     Customer :{
         type: mongoose.Schema.Types.ObjectId,
-        ref: Customer
+        ref: 'Customer'
     },
     textReview:String,
     imgReviewPath:String,

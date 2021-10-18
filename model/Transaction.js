@@ -8,11 +8,11 @@ const Payment = require('./Payment');
 const Transaction = mongoose.model('Transaction', new mongoose.Schema({
     shop :{
         type: mongoose.Schema.Types.ObjectId,
-        ref: Shop
+        ref: 'Shop'
     },
     merchant :{
         type: mongoose.Schema.Types.ObjectId,
-        ref: Merchant
+        ref: 'Merchant'
     },
     totoalProductPrice:{
         type:Number,
@@ -24,7 +24,7 @@ const Transaction = mongoose.model('Transaction', new mongoose.Schema({
     },
     shipping :{
         type: mongoose.Schema.Types.ObjectId,
-        ref: Shipping
+        ref: 'Shipping'
     },
     shippingName:String,
     shippingImg:String,
@@ -34,14 +34,14 @@ const Transaction = mongoose.model('Transaction', new mongoose.Schema({
     },
     customer :{
         type: mongoose.Schema.Types.ObjectId,
-        ref: Customer
+        ref: 'Customer'
     },
     customerName:String,
     customerTel:String,
     customerEmail:String,
     payment :{
         type: mongoose.Schema.Types.ObjectId,
-        ref: Payment
+        ref: 'Payment'
     },
     paymentImg:String,
     paymentName:String,
