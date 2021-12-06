@@ -10,7 +10,8 @@ const merchantSchema = Joi.object({
         .messages({
             'string.base': `Please enter your name.`,
             'string.empty': `Please enter your name.`,
-            'any.required': `Please enter your name`
+            'any.required': `Please enter your name`,
+            
           }),
     lastname: Joi.string()
         .required()
@@ -33,12 +34,12 @@ const merchantSchema = Joi.object({
     .messages({'any.only': 'password does not match' }),
     email: Joi.string()
     .required()
-        .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
+    .pattern(new RegExp('^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$'))
         .messages({
             'string.base': `Please enter your email.`,
             'string.empty': `Please enter your email.`,
             'any.required': `Please enter your email`,
-            'string.email': `email is incorrect.`,
+            'string.pattern': `email is incorrect.`
           }),
     role: Joi.number()
         .required()
