@@ -7,6 +7,7 @@ const {logConfiguration} = require('../helper/logging/logging');
 const winston = require('winston');
 const jwt = require('jsonwebtoken');
 const config = require('config');
+const {auth} = require('../middleware/auth');
 
 const logger = winston.createLogger(logConfiguration);
 
