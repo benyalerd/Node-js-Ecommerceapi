@@ -34,7 +34,7 @@ const merchantSchema = Joi.object({
     .messages({'any.only': 'password does not match' }),
     email: Joi.string()
     .required()
-    .pattern(new RegExp('^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$'))
+    .pattern(new RegExp('^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$'))
         .messages({
             'string.base': `Please enter your email.`,
             'string.empty': `Please enter your email.`,
@@ -50,7 +50,7 @@ const merchantSchema = Joi.object({
           }),
     tel:Joi.string()
     .required()
-    .pattern(new RegExp(/((\+66|0)(\d{1,2}\-?\d{3}\-?\d{3,4}))/))
+    .pattern(new RegExp('^((\\+66|0)(\\d{1,2}\\-?\\d{3}\\-?\\d{3,4}))$'))
     .messages({
         'string.base': `Please select your Tel.`,
         'string.empty': `Please select your Tel.`,
