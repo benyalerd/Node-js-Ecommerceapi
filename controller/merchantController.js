@@ -15,9 +15,9 @@ router.post("/register",async(req,res)=>{
     try
     {
 const {error} = merchantValidation(req.body);
-if(error)return res.status(400).send(error.details[0].message);
+if(error)return res.status(200).send({errorMsg:error.details[0].message,isError:true});
 var isExistEmail = await Merchant.find({email:req.body.email});
-if(Object.keys(isExistEmail).length > 0)return res.status(400).send("email is already exist.");
+if(Object.keys(isExistEmail).length > 0)return res.status(200).send({errorMsg:"email is already exist.",isError:true});
 var salt = await GenerateSalt();
 var hashPassword = await HashPassword(req.body.password,salt);
 let merchant = new Merchant({name:req.body.name,lastname:req.body.lastname,email:req.body.email,role:req.body.role,
@@ -25,12 +25,12 @@ tel:req.body.tel,salt:salt,password:hashPassword,isActive:true,isDelete:false});
 merchant = await merchant.save();
 const token = jwt.sign({id:merchant._id,fullname:merchant.name+" "+merchant.lastname,email:merchant.email,role:merchant.role,
 tel:merchant.tel},config.get('jwtPrivateKey'));
-return res.header('x-auth-token',token).status(200).send({email:merchant.email,name:merchant.name,lastname:merchant.lastname,tel:merchant.tel,id:merchant._id});
+return res.status(200).send({token:token,errorMsg:"success",isError:false,email:merchant.email,name:merchant.name,lastname:merchant.lastname,tel:merchant.tel,id:merchant._id});
     }
     catch(err){
-        logger.error(JSON.stringify(err.message));
+        logger.error(JSON.stringify(err));
         console.log(err);
-        return res.status(500).send(err.message);
+        return res.status(200).send({errorMsg:err.message,isError:true});
         
     }
 });
@@ -39,7 +39,7 @@ router.post("/editmerchant",auth,async(req,res)=>{
     try
     {
 let merchant = await Merchant.findById(req.body.merchantId);
-if(Object.keys(shop).length = 0)return res.status(400).send("not found shop");
+if(Object.keys(merchant).length = 0)return res.status(200).send({errorMsg:"not found merchant",isError:true});
 if(req.body.name!= null && req.body.name!= "")
 {
     merchant.name = req.body.name;
@@ -54,13 +54,13 @@ if(req.body.tel!= null && req.body.tel!= "")
 }
 
 
-shop = await shop.save();
-return res.status(200).send(shop);
+merchant = await merchant.save();
+return res.status(200).send({errorMsg:"success",isError:false,email:merchant.email,name:merchant.name,lastname:merchant.lastname,tel:merchant.tel,id:merchant._id});
     }
     catch(err){
-        logger.error(JSON.stringify(err.message));
+        logger.error(JSON.stringify(err));
         console.log(err);
-        return res.status(500).send(err.message);
+        return res.status(200).send({errorMsg:err.message,isError:true});
         
     }
 });
