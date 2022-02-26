@@ -78,14 +78,7 @@ merchantValidation = function (body){
             'string.empty': `Please enter your shop name.`,
             'any.required': `Please enter your shop name.`
           }),
-          coverImg: Joi.string()
-        .required()
-        .messages({
-            'string.base': `Please enter your cover Image.`,
-            'string.empty': `Please enter your cover Image.`,
-            'any.required': `Please enter your cover Image.`
-          }),
-          merchant: Joi.string()
+          merchantId: Joi.string()
           .required()
           .messages({
               'string.base': `merchant Id is required.`,

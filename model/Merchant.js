@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Merchant = mongoose.model('Merchant', new mongoose.Schema({
-Role:{
+role:{
     type:String,
         require:true
 },
