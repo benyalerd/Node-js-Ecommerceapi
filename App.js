@@ -6,11 +6,16 @@ const {logConfiguration} = require('./helper/logging/logging');
 const Login = require('./controller/loginController');
 const Register = require('./controller/merchantController');
 const Shop = require('./controller/shopController');
+const Payment = require('./controller/paymentController');
+const Master = require('./controller/masterController');
 const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use('/api/login', Login);
 app.use('/api/merchant', Register);
 app.use('/api/shop',Shop);
+app.use('/api/master',Master);
+app.use('/api/payment',Payment);
+
 const logger = winston.createLogger(logConfiguration);
 process.on('uncaughtException',(ex)=>{    
     logger.error(JSON.stringify(ex));

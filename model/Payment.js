@@ -11,8 +11,8 @@ const Payment = mongoose.model('Payment', new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Master'
     },
-   AccountName:String,
-   AccountNumber:String
+   accountName:String,
+   accountNumber:String
 }));
 
 module.exports.Payment = Payment;

@@ -134,6 +134,125 @@ ShopValidation = function (body){
      }
   }
 
+  const paymentSchema = Joi.object({
+    shopId: Joi.string()
+        .required()
+        .messages({
+            'string.base': `shop Id is required.`,
+            'string.empty': `shop Id is required.`,
+            'any.required': `shop Id is required.`
+          }),
+          masterId: Joi.string()
+          .required()
+          .messages({
+              'string.base': `master Id is required.`,
+              'string.empty': `master Id is required.`,
+              'any.required': `master Id is required.`
+            }),
+              accountName: Joi.string()
+          .required()
+          .messages({
+              'string.base': `Please enter account name.`,
+              'string.empty': `Please enter account name.`,
+              'any.required': `Please enter account name.`
+            }),
+              accountNumber: Joi.string()
+          .required()
+          .pattern(new RegExp('^[0-9]{10,12}$'))
+          .messages({
+              'string.base': `Please enter account number.`,
+              'string.empty': `Please enter account number.`,
+              'any.required': `Please enter account number.`,
+              'string.pattern': `account number is incorrect.`
+            })
+
+});
+
+
+paymentValidation = function (body){
+    try {
+        const error = paymentSchema.validate(body,options);
+        return error;
+
+    }
+    catch (err) {
+        throw err;
+     }
+  }
+
+  
+  const shippingSchema = Joi.object({
+    shopId: Joi.string()
+        .required()
+        .messages({
+            'string.base': `shop Id is required.`,
+            'string.empty': `shop Id is required.`,
+            'any.required': `shop Id is required.`
+          }),
+          masterId: Joi.string()
+          .required()
+          .messages({
+              'string.base': `master Id is required.`,
+              'string.empty': `master Id is required.`,
+              'any.required': `master Id is required.`
+            }),
+              price: Joi.string()
+          .required()
+          .messages({
+              'string.base': `Please enter price.`,
+              'string.empty': `Please enter price.`,
+              'any.required': `Please enter price.`
+            }),
+              minDay: Joi.string()
+          .required()
+          .messages({
+              'string.base': `Please enter minDay.`,
+              'string.empty': `Please enter minDay.`,
+              'any.required': `Please enter minDay.`,
+            }),
+             maxDay: Joi.string()
+          .required()
+          .messages({
+              'string.base': `Please enter maxDay.`,
+              'string.empty': `Please enter maxDay.`,
+              'any.required': `Please enter maxDay.`,
+            })
+
+
+});
+
+
+shippingValidation = function (body){
+    try {
+        const error = shippingSchema.validate(body,options);
+        return error;
+
+    }
+    catch (err) {
+        throw err;
+     }
+  }
+
+   accountNumberValidation = function(body){
+    try {
+        const error = Joi.object({
+            accountNumber:Joi.string()
+            .pattern(new RegExp('^[0-9]{10,12}$'))
+            .messages({
+                'string.pattern': `account number is incorrect.`,
+              })
+                }).validate(body,options);
+        return error;
+
+    }
+    catch (err) {
+        throw err;
+     }
+  }
+
+module.exports.shippingValidation = shippingValidation;
+module.exports.accountNumberValidation = accountNumberValidation;
+module.exports.paymentValidation = paymentValidation;
 module.exports.merchantValidation = merchantValidation;
 module.exports.ShopValidation = ShopValidation;
 module.exports.telValidation = telValidation;

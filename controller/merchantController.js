@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {merchantValidation} = require('../helper/validation/validation');
+const {merchantValidation,emailValidation,telValidation} = require('../helper/validation/validation');
 const {Merchant} = require('../model/Merchant');
 const {GenerateSalt,HashPassword} = require('../helper/authentication/HashPassword')
 const {logConfiguration} = require('../helper/logging/logging');
@@ -39,7 +39,7 @@ router.post("/editmerchant",auth,async(req,res)=>{
     try
     {
 let merchant = await Merchant.findById(req.body.merchantId);
-if(Object.keys(merchant).length = 0)return res.status(200).send({errorMsg:"not found merchant",isError:true});
+if(merchant == null)return res.status(200).send({errorMsg:"not found merchant",isError:true});
 if(req.body.name!= null && req.body.name!= "")
 {
     merchant.name = req.body.name;
@@ -50,6 +50,8 @@ if(req.body.lastname!= null && req.body.lastname!= "")
 }
 if(req.body.tel!= null && req.body.tel!= "")
 {
+    const {error} = telValidation({email:req.body.tel});
+   if(error)return res.status(200).send({errorMsg:error.details[0].message,isError:true});
     merchant.tel = req.body.tel;
 }
 
