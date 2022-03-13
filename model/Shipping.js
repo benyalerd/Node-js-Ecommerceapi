@@ -13,7 +13,9 @@ const Shipping = mongoose.model('Shipping', new mongoose.Schema({
     },
     Price:Number,
     MaxDay:Number,
-    MinDay:Number
+    MinDay:Number,
+    masterName:String,
+    masterImg:String
 }));
 
 module.exports.Shipping = Shipping;

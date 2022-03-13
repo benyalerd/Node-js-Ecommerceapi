@@ -30,7 +30,7 @@ const {error} = shippingValidation(req.body);
 if(error)return res.status(200).send({errorMsg:error.details[0].message,isError:true});
 const shop = await Shop.findById(req.body.shopId);
 if(shop == null)return res.status(200).send({errorMsg:"not found shop",isError:true});
-let shipping = new Shipping({shop:req.body.shopId,master:req.body.masterId,price:req.body.price,minDay:req.body.minDay,maxDay:req.body.maxDay});
+let shipping = new Shipping({shop:req.body.shopId,master:req.body.masterId,price:req.body.price,minDay:req.body.minDay,maxDay:req.body.maxDay,masterName:req.body.masterName,masterImg:req.body.masterImg});
 shipping = await shipping.save();
 return res.status(200).send({shopId:shipping.shopId,masterId:shipping.masterId,price:shipping.price,minDay:shipping.minDay,maxDay:shipping.maxDay,errorMsg:"success",isError:false});
     }

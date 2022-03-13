@@ -12,7 +12,9 @@ const Payment = mongoose.model('Payment', new mongoose.Schema({
         ref: 'Master'
     },
    accountName:String,
-   accountNumber:String
+   accountNumber:String,
+   masterName:String,
+   masterImg:String
 }));
 
 module.exports.Payment = Payment;
