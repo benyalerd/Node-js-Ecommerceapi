@@ -21,7 +21,11 @@ const Product = mongoose.model('Product', new mongoose.Schema({
         min:0
     },
     productName:String,
-    productDesc:String
+    productDesc:String,
+    createdDate:Date,
+    createdBy:String,
+    updatedDate:Date,
+    updatedBy:String
 
   
 }));

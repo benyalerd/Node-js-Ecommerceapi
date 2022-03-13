@@ -7,7 +7,11 @@ const Promotion = mongoose.model('Promotion', new mongoose.Schema({
    type:{
        type:Number
    },
-   discount:Number
+   discount:Number,
+   createdDate:Date,
+   createdBy:String,
+   updatedDate:Date,
+   updatedBy:String
   
 }));
 

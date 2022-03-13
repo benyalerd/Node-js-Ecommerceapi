@@ -15,7 +15,11 @@ const Shipping = mongoose.model('Shipping', new mongoose.Schema({
     MaxDay:Number,
     MinDay:Number,
     masterName:String,
-    masterImg:String
+    masterImg:String,
+    createdDate:Date,
+    createdBy:String,
+updatedDate:Date,
+updatedBy:String
 }));
 
 module.exports.Shipping = Shipping;

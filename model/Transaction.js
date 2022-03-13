@@ -53,7 +53,11 @@ const Transaction = mongoose.model('Transaction', new mongoose.Schema({
     TranType:{
         type:Number,
         enum:[1,2,3,4,5,6]
-    }
+    },
+    createdDate:Date,
+    createdBy:String,
+    updatedDate:Date,
+    updatedBy:String
       
 }));
 

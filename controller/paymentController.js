@@ -41,7 +41,7 @@ const {error} = paymentValidation(req.body);
 if(error)return res.status(200).send({errorMsg:error.details[0].message,isError:true});
 const shop = await Shop.findById(req.body.shopId);
 if(shop == null)return res.status(200).send({errorMsg:"not found shop",isError:true});
-let payment = new Payment({shop:req.body.shopId,master:req.body.masterId,accountName:req.body.accountName,accountNumber:req.body.accountNumber,masterName:req.body.masterName,masterImg:req.body.masterImg});
+let payment = new Payment({shop:req.body.shopId,master:req.body.masterId,accountName:req.body.accountName,accountNumber:req.body.accountNumber,masterName:req.body.masterName,masterImg:req.body.masterImg,createdDate:new Date(),createdBy:req.body.merchantId});
 payment = await payment.save();
 return res.status(200).send({shopId:shop.shopId,masterId:shop.masterId,accountName:shop.accountName,accountNumber:shop.accountNumber,errorMsg:"success",isError:false});
     }
@@ -69,7 +69,8 @@ if(req.body.accountNumber!= null && req.body.accountNumber!= "")
     payment.accountNumber = req.body.accountNumber;
 }
 
-
+payment.updatedBy = req.body.merchantId;
+payment.updatedDate = new Date();
 payment = await payment.save();
 return res.status(200).send({errorMsg:"success",isError:false});
     }

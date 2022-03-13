@@ -24,7 +24,7 @@ if(req.body.tel != null && req.body.tel != ""){
 const merchant = await Merchant.findById(req.body.merchantId);
 if(merchant == null)return res.status(200).send({errorMsg:"not found merchant",isError:true});
 let shop = new Shop({shopName:req.body.shopName,coverImg:req.body.coverImg,email:req.body.email,tel:req.body.tel,
-address:req.body.address,isActive:true,isDelete:false,merchant:merchant._id});
+address:req.body.address,isActive:true,isDelete:false,merchant:merchant._id,createdDate:new Date(),createdBy:merchant._id});
 shop = await shop.save();
 return res.status(200).send({shopName:shop.shopName,coverImg:shop.coverImg,email:shop.email,tel:shop.tel,
     address:shop.address,merchant:merchant._id,errorMsg:"success",isError:false});
@@ -77,7 +77,8 @@ if(req.body.address!= null && req.body.address!= "")
 {
     shop.address = req.body.address;
 }
-
+shop.updatedBy = req.body.merchantId;
+shop.updatedDate = new Date();
 shop = await shop.save();
 return res.status(200).send({shopName:shop.shopName,coverImg:shop.coverImg,email:shop.email,tel:shop.tel,
     address:shop.address,errorMsg:"success",isError:false});

@@ -12,7 +12,11 @@ isActive:Boolean,
 isDelete:Boolean,
 address:String,
 shopName:String,
-CoverImg:String
+CoverImg:String,
+createdDate:Date,
+createdBy:String,
+updatedDate:Date,
+updatedBy:String
 }));
 
 module.exports.Shop = Shop;

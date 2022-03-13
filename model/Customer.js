@@ -27,7 +27,8 @@ email :{
     type:String
 },
 isActive:Boolean,
-isDelete:Boolean
+isDelete:Boolean,
+LastupdatedDate:Date
 }));
 
 module.exports.Customer = Customer;
