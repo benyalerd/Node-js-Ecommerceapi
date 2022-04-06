@@ -14,8 +14,6 @@ const Shipping = mongoose.model('Shipping', new mongoose.Schema({
     Price:Number,
     MaxDay:Number,
     MinDay:Number,
-    masterName:String,
-    masterImg:String,
     createdDate:Date,
     createdBy:String,
 updatedDate:Date,

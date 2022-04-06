@@ -13,8 +13,6 @@ const Payment = mongoose.model('Payment', new mongoose.Schema({
     },
    accountName:String,
    accountNumber:String,
-   masterName:String,
-   masterImg:String,
    createdDate:Date,
 createdBy:String,
 updatedDate:Date,

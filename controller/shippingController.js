@@ -11,7 +11,7 @@ const ObjectId = require('mongodb').ObjectID;
 router.post("/getAllShipping",auth,async(req,res)=>{
     try
     {
-let allShipping = await Shipping.find({shop:ObjectId(req.body.shopId)});
+let allShipping = await Shipping.find({shop:ObjectId(req.body.shopId)}).populate('master');
 if(Object.keys(allShipping).length = 0)return res.status(200).send({errorMsg:"",isError:false});
 return res.status(200).send({Shippings:allShipping,errorMsg:"success",isError:false});
     }
@@ -30,6 +30,9 @@ const {error} = shippingValidation(req.body);
 if(error)return res.status(200).send({errorMsg:error.details[0].message,isError:true});
 const shop = await Shop.findById(req.body.shopId);
 if(shop == null)return res.status(200).send({errorMsg:"not found shop",isError:true});
+else if(shop.isActive != true || shop.isDelete != false){
+    return res.status(200).send({errorMsg:"not found shop",isError:true});
+}
 let shipping = new Shipping({shop:req.body.shopId,master:req.body.masterId,price:req.body.price,minDay:req.body.minDay,maxDay:req.body.maxDay,masterName:req.body.masterName,masterImg:req.body.masterImg,createdDate:new Date(),createdBy:req.body.merchantId});
 shipping = await shipping.save();
 return res.status(200).send({shopId:shipping.shopId,masterId:shipping.masterId,price:shipping.price,minDay:shipping.minDay,maxDay:shipping.maxDay,errorMsg:"success",isError:false});
@@ -79,7 +82,7 @@ router.post("/deleteShipping",auth,async(req,res)=>{
 let shipping = await Shipping.findOne({_id:ObjectId(req.body.id)});
 if(shipping == null)return res.status(200).send({errorMsg:"not found shipping",isError:true});
 
-shipping = await Shipping.remove();
+shipping = await shipping.remove();
 return res.status(200).send({errorMsg:"success",isError:false});
     }
     catch(err){

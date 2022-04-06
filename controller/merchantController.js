@@ -67,4 +67,22 @@ return res.status(200).send({errorMsg:"success",isError:false,email:merchant.ema
     }
 });
 
+router.post("/getmerchant",auth,async(req,res)=>{
+    try
+    {
+    let merchant = await Merchant.findById(req.body.merchantId);
+    if(merchant == null)return res.status(200).send({errorMsg:"not found merchant",isError:true});
+    else if(merchant.isActive != true || merchant.isDelete != false){
+        return res.status(200).send({errorMsg:"not found merchant",isError:true});
+    }
+    return res.status(200).send({errorMsg:"success",isError:false,email:merchant.email,name:merchant.name,lastname:merchant.lastname,tel:merchant.tel,id:merchant._id});
+    }
+    catch(err){
+        logger.error(JSON.stringify(err));
+        console.log(err);
+        return res.status(200).send({errorMsg:err.message,isError:true});
+        
+    }
+});
+
 module.exports = router

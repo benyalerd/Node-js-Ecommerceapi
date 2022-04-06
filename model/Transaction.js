@@ -26,6 +26,7 @@ const Transaction = mongoose.model('Transaction', new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Shipping'
     },
+    orderCode:String,
     shippingName:String,
     shippingImg:String,
     shippingPrice:{
@@ -47,10 +48,9 @@ const Transaction = mongoose.model('Transaction', new mongoose.Schema({
     paymentName:String,
     AccountName:String,
     AccountNumber:String,
-    ImageSlip:String,
     paymentDate:Date,
     tranDate:Date,
-    TranType:{
+    tranType:{
         type:Number,
         enum:[1,2,3,4,5,6]
     },

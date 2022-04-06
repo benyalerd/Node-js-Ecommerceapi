@@ -196,26 +196,32 @@ paymentValidation = function (body){
               'string.empty': `master Id is required.`,
               'any.required': `master Id is required.`
             }),
-              price: Joi.string()
+              price: Joi.number()
+          .min(0)
           .required()
           .messages({
-              'string.base': `Please enter price.`,
-              'string.empty': `Please enter price.`,
-              'any.required': `Please enter price.`
+              'number.base': `Please enter price.`,
+              'number.empty': `Please enter price.`,
+              'any.required': `Please enter price.`,
+              'number.min': `price is  incorrect.`,
             }),
-              minDay: Joi.string()
+              minDay: Joi.number()
+              .min(0)
           .required()
           .messages({
-              'string.base': `Please enter minDay.`,
-              'string.empty': `Please enter minDay.`,
+              'number.base': `Please enter minDay.`,
+              'number.empty': `Please enter minDay.`,
               'any.required': `Please enter minDay.`,
+              'number.min': `min day is  incorrect.`,
             }),
-             maxDay: Joi.string()
+             maxDay: Joi.number()
+             .min(0)
           .required()
           .messages({
-              'string.base': `Please enter maxDay.`,
-              'string.empty': `Please enter maxDay.`,
+              'number.base': `Please enter maxDay.`,
+              'number.empty': `Please enter maxDay.`,
               'any.required': `Please enter maxDay.`,
+              'number.min': `max day is  incorrect.`,
             })
 
 
@@ -250,6 +256,82 @@ shippingValidation = function (body){
      }
   }
 
+  const productSchema = Joi.object({
+    shopId: Joi.string()
+        .required()
+        .messages({
+            'string.base': `shop Id is required.`,
+            'string.empty': `shop Id is required.`,
+            'any.required': `shop Id is required.`
+          }),
+          merchantId: Joi.string()
+          .required()
+          .messages({
+              'string.base': `merchant Id is required.`,
+              'string.empty': `merchant Id is required.`,
+              'any.required': `merchant Id is required.`
+            }),
+            productName: Joi.string()
+            .required()
+            .messages({
+                'string.base': `Please enter productName.`,
+                'string.empty': `Please enter productName.`,
+                'any.required': `Please enter productName.`
+              }),
+              productDesc: Joi.string()
+            .required()
+            .messages({
+                'string.base': `Please enter productDesc.`,
+                'string.empty': `Please enter productDesc.`,
+                'any.required': `Please enter productDesc.`
+              }),
+              stock: Joi.number()
+              .min(0)
+          .required()
+          .messages({
+              'number.base': `Please enter stock.`,
+              'number.empty': `Please enter stock.`,
+              'any.required': `Please enter stock.`,
+              'number.min': `stock is  incorrect.`,
+            }),
+            fullPrice: Joi.number()
+              .min(0)
+          .required()
+          .messages({
+              'number.base': `Please enter fullPrice.`,
+              'number.empty': `Please enter fullPrice.`,
+              'any.required': `Please enter fullPrice.`,
+              'number.min': `fullPrice is  incorrect.`,
+            }),
+         
+
+});
+
+
+productValidation = function (body){
+    try {
+        const error = productSchema.validate(body,options);
+        return error;
+
+    }
+    catch (err) {
+        throw err;
+     }
+  }
+
+  transactionStatusValidation = function (newStatus,oldStatus){
+    try {
+        return true;
+        //ย้อนกลับหลังไม่ได้
+        if(oldStatus > newStatus){
+          return false;
+        }
+    }
+    catch (err) {
+        throw err;
+     }
+  }
+
 module.exports.shippingValidation = shippingValidation;
 module.exports.accountNumberValidation = accountNumberValidation;
 module.exports.paymentValidation = paymentValidation;
@@ -257,5 +339,6 @@ module.exports.merchantValidation = merchantValidation;
 module.exports.ShopValidation = ShopValidation;
 module.exports.telValidation = telValidation;
 module.exports.emailValidation = emailValidation;
+module.exports.productValidation = productValidation;
 
 

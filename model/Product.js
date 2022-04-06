@@ -5,7 +5,7 @@ const Merchant = require('./Merchant');
 const Product = mongoose.model('Product', new mongoose.Schema({
     shop :{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Shop'
+        ref: 'Shop',
     },
     merchant :{
         type: mongoose.Schema.Types.ObjectId,
@@ -25,7 +25,8 @@ const Product = mongoose.model('Product', new mongoose.Schema({
     createdDate:Date,
     createdBy:String,
     updatedDate:Date,
-    updatedBy:String
+    updatedBy:String,
+    imagePath:String
 
   
 }));
