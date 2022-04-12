@@ -49,8 +49,11 @@ router.post("/searchTransaction",auth,async(req,res)=>{
         .limit(req.body.limit)
         .skip(req.body.page*req.body.limit)
         .exec();
+
+        let totalRecord = await Product.find(query).count();
+
         if(transaction == null)return res.status(200).send({errorMsg:"",isError:false});
-        return res.status(200).send({errorMsg:"success",isError:false,transactionList:transaction});
+        return res.status(200).send({totalRecord:totalRecord,errorMsg:"success",isError:false,transactionList:transaction});
     }
     catch(err){
         logger.error(JSON.stringify(err));

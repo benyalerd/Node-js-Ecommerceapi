@@ -53,8 +53,10 @@ router.post("/searchProduct",auth,async(req,res)=>{
         .limit(req.body.limit)
         .skip(req.body.page*req.body.limit)
         .exec();
+
+        let totalRecord = await Product.find(query).count();
         if(product == null)return res.status(200).send({errorMsg:"",isError:false});
-        return res.status(200).send({errorMsg:"success",isError:false,productList:product});
+        return res.status(200).send({errorMsg:"success",isError:false,productList:product,totalRecord:totalRecord});
     }
     catch(err){
         logger.error(JSON.stringify(err));

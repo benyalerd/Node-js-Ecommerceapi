@@ -8,8 +8,10 @@ const ProductSKU = mongoose.model('ProductSKU', new mongoose.Schema({
     },
    skuName:String,
    option:String,
-   value:Number,
-   imagePath:String
+   fullPrice:{
+        type:Number,
+        min:0
+   }
 }));
 
 module.exports.ProductSKU = ProductSKU;

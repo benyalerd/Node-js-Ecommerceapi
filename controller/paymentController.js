@@ -24,8 +24,10 @@ router.post("/getAllPayment",async(req,res)=>{
         .limit(req.body.limit)
         .skip(req.body.page*req.body.limit)
         .exec();
+
+        let totalRecord = await Product.find({shop:ObjectId(req.body.shopId)}).count();
 if(Object.keys(allPayment).length = 0)return res.status(200).send({errorMsg:"",isError:false});
-return res.status(200).send({payments:allPayment,errorMsg:"success",isError:false});
+return res.status(200).send({payments:allPayment,errorMsg:"success",isError:false,totalRecord:totalRecord});
     }
     catch(err){
         logger.error(JSON.stringify(err));
