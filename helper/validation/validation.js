@@ -294,15 +294,24 @@ shippingValidation = function (body){
               'any.required': `Please enter stock.`,
               'number.min': `stock is  incorrect.`,
             }),
-            fullPrice: Joi.number()
+            maxPrice: Joi.number()
               .min(0)
           .required()
           .messages({
-              'number.base': `Please enter fullPrice.`,
-              'number.empty': `Please enter fullPrice.`,
-              'any.required': `Please enter fullPrice.`,
-              'number.min': `fullPrice is  incorrect.`,
+              'number.base': `Please enter maxPrice.`,
+              'number.empty': `Please enter maxPrice.`,
+              'any.required': `Please enter maxPrice.`,
+              'number.min': `maxPrice is  incorrect.`,
             }),
+            minPrice: Joi.number()
+            .min(0)
+        .required()
+        .messages({
+            'number.base': `Please enter minPrice.`,
+            'number.empty': `Please enter minPrice.`,
+            'any.required': `Please enter minPrice.`,
+            'number.min': `minPrice is  incorrect.`,
+          }),
          
 
 });

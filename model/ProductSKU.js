@@ -11,7 +11,11 @@ const ProductSKU = mongoose.model('ProductSKU', new mongoose.Schema({
    fullPrice:{
         type:Number,
         min:0
-   }
+   },
+   stock:{
+    type:Number,
+    min:0
+}
 }));
 
 module.exports.ProductSKU = ProductSKU;

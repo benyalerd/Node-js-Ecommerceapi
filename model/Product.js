@@ -12,11 +12,11 @@ const Product = mongoose.model('Product', new mongoose.Schema({
         ref: 'Merchant'
     },
     isActive:Boolean,
-    stock:{
+    minPrice:{
         type:Number,
         min:0
     },
-    fullPrice:{
+    maxPrice:{
         type:Number,
         min:0
     },
@@ -26,9 +26,11 @@ const Product = mongoose.model('Product', new mongoose.Schema({
     createdBy:String,
     updatedDate:Date,
     updatedBy:String,
-    imagePath:String
-
-  
+    imagePath:String,
+    stock:{
+        type:Number,
+        min:0
+    }
 }));
 
 module.exports.Product = Product;
