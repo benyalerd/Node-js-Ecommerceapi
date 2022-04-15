@@ -16,6 +16,7 @@
     "fawn": "^2.1.5",
     "joi": "^17.4.2",
     "jsonwebtoken": "^8.5.1",
+    "linq": "^4.0.0",
     "mongoose": "^6.0.10",
     "winston": "^3.3.3",
     "winston-mongodb": "^5.0.7"

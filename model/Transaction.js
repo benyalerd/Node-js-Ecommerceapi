@@ -14,11 +14,11 @@ const Transaction = mongoose.model('Transaction', new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Merchant'
     },
-    totoalProductPrice:{
+    totalProductPrice:{
         type:Number,
         min:0
     },
-    totoalPrice:{
+    totalPrice:{
         type:Number,
         min:0
     },
@@ -40,6 +40,7 @@ const Transaction = mongoose.model('Transaction', new mongoose.Schema({
     customerName:String,
     customerTel:String,
     customerEmail:String,
+    customerAddress:String,
     payment :{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Payment'
@@ -52,8 +53,10 @@ const Transaction = mongoose.model('Transaction', new mongoose.Schema({
     tranDate:Date,
     tranType:{
         type:Number,
-        enum:[1,2,3,4,5,6]
+        enum:[1,2,3,4,5,6,7,8]
     },
+    reason:String,
+    trackingNumber:String,
     createdDate:Date,
     createdBy:String,
     updatedDate:Date,

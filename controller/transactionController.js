@@ -90,13 +90,16 @@ router.post("/updateTransactionDetail",auth,async(req,res)=>{
     {
         const transaction = await Product.findById(req.body.transactionId);      
         if(transaction == null)return res.status(200).send({errorMsg:"not found transaction",isError:true});
-        if(req.body.paymentImg != null &&req.body.paymentImg == ""){
-            transaction.paymentImg  = req.body.paymentImg
+        if(req.body.reason != null &&req.body.reason == ""){
+            transaction.reason  = req.body.reason
         }
         if(req.body.tranType > 0){
             const isValid = transactionStatusValidation(req.body.tranType,transaction.tranType)
             if(!isValid)return res.status(200).send({errorMsg:"status is incorrect",isError:true});
             transaction.tranType  = req.body.tranType
+        }
+        if(req.body.trackingNumber!= null &&req.body.trackingNumber == "" ){
+            transaction.trackingNumber = req.body.trackingNumber
         }
         
         transaction.updatedDate = new Date();
@@ -113,3 +116,5 @@ router.post("/updateTransactionDetail",auth,async(req,res)=>{
         
     }
 });
+
+module.exports = router

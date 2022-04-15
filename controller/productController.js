@@ -57,19 +57,8 @@ router.post("/searchProduct",auth,async(req,res)=>{
 
         for (const element of product) {
             var path = await ProductContent.findOne( { "product": element._id,"contentType":1 } );         
-            element.imagePath = path.imagePath;
-            var totalStock = await ProductSKU.aggregate([
-                {
-                    $match: { product: element._id }
-                },
-                {
-                    $group: {_id:product, totalStock: { $sum: "$stock" } }
-                 }
-             ])
-             if(totalStock)
-             {
-            element.stock = totalStock[0].totalStock;
-             }
+            element["imagePath"] = path.imagePath;
+            
         };
     
         let totalRecord = await Product.find(query).count();
@@ -99,7 +88,7 @@ router.post("/addProduct",auth,async(req,res)=>{
             return res.status(200).send({errorMsg:"not found shop",isError:true});
         }
         
-        let product = new Product({shop:req.body.shopId,merchant:req.body.merchantId,isActive:true,maxPrice:req.body.maxPrice,minPrice:req.body.minPrice,productName:req.body.productName,productDesc:req.body.productDesc,createdDate:new Date(),createdBy:req.body.merchantId,ImagePath:req.body.imagePath});
+        let product = new Product({stock:req.body.stock,shop:req.body.shopId,merchant:req.body.merchantId,isActive:true,maxPrice:req.body.maxPrice,minPrice:req.body.minPrice,productName:req.body.productName,productDesc:req.body.productDesc,createdDate:new Date(),createdBy:req.body.merchantId,ImagePath:req.body.imagePath});
         product = await product.save({ session });      
         var productId = product._id;
         
@@ -139,11 +128,24 @@ router.post("/getProductDetail",auth,async(req,res)=>{
         
         const productSku = await ProductSku.findById(req.body.productId);
         const productContent = await ProductContent.findById(req.body.productId);
-       
-        product["productSku"] = productSku;
-        product["productContent"] = productContent;
-
-        return res.status(200).send(product);
+        const productMainContent = [];
+        const productSkuList = [];
+        let skuName = "";
+        for (const element of productContent) {
+            if(element.contentType == 1 || element.contentType == 2){
+                productMainContent.push(element);
+            }
+            else if(element.contentType == 3){
+                var sku = productSku.find(x => x._id == element.skuId);
+                if(sku)
+                {
+                skuName = sku.skuName;
+               sku["ProductSkuContent"] = element;
+               productSkuList.push(sku);
+                }
+            }
+        }
+        return res.status(200).send({skuName:skuName,errorMsg:"success",isError:false,productName:product.productName,productDesc:product.productDesc,productMainContent:productMainContent,productSkuList:productSkuList,stock:product.stock,isActive:product.isActive});
     }
     catch(err){
         logger.error(JSON.stringify(err));
@@ -153,7 +155,7 @@ router.post("/getProductDetail",auth,async(req,res)=>{
     }
 });
 
-router.post("/deleteProductDetail",auth,async(req,res)=>{
+router.post("/deleteProduct",auth,async(req,res)=>{
     const session = await conn.startSession();
     try
     {

@@ -26,7 +26,6 @@ const Product = mongoose.model('Product', new mongoose.Schema({
     createdBy:String,
     updatedDate:Date,
     updatedBy:String,
-    imagePath:String,
     stock:{
         type:Number,
         min:0

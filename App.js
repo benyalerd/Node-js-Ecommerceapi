@@ -9,6 +9,7 @@ const Payment = require('./controller/paymentController');
 const Master = require('./controller/masterController');
 const Shipping = require('./controller/shippingController');
 const Product = require('./controller/productController');
+const Transaction = require('./controller/transactionController');
 const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use('/api/login', Login);
@@ -18,6 +19,7 @@ app.use('/api/master',Master);
 app.use('/api/payment',Payment);
 app.use('/api/shipping',Shipping);
 app.use('/api/product',Product);
+app.use('/api/transaction',Transaction);
 
 const logger = winston.createLogger(logConfiguration);
 process.on('uncaughtException',(ex)=>{    
