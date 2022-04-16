@@ -9,4 +9,16 @@ const transactionType = {
     8: 'cancel'
 }
 
+const mediaType = {
+    1: 'image',
+    2: 'video'
+}
+
+const contentType = {
+    1: 'mainImage',
+    2: 'subMainImage',
+    3: 'skuImage',
+    4: 'promotionImage'
+}
+
 module.exports.transactionType = transactionType

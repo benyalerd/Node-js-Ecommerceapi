@@ -35,7 +35,8 @@ const TransactionDetail = mongoose.model('TransactionDetail', new mongoose.Schem
         type:Number,
         min:0
     },
-    skuName:String
+    skuName:String,
+    option:String
 }));
 
 module.exports.TransactionDetail = TransactionDetail;
