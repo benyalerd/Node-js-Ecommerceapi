@@ -57,7 +57,7 @@ router.post("/searchProduct",auth,async(req,res)=>{
 
         for (const element of product) {
             var path = await ProductContent.findOne( { "product": element._id,"contentType":1 } );         
-            element["imagePath"] = path.imagePath;
+            element.imagePath = path.imagePath;
             
         };
     
@@ -126,8 +126,8 @@ router.post("/getProductDetail",auth,async(req,res)=>{
         
         if(product == null)return res.status(200).send({errorMsg:"not found product",isError:true});
         
-        const productSku = await ProductSku.findById(req.body.productId);
-        const productContent = await ProductContent.findById(req.body.productId);
+        const productSku = await ProductSKU.find({product:ObjectId(req.body.productId)});
+        const productContent = await ProductContent.find({product:ObjectId(req.body.productId)});
         const productMainContent = [];
         const productSkuList = [];
         let skuName = "";
@@ -136,7 +136,7 @@ router.post("/getProductDetail",auth,async(req,res)=>{
                 productMainContent.push(element);
             }
             else if(element.contentType == 3){
-                var sku = productSku.find(x => x._id == element.skuId);
+                var sku = ProductSKU.find(x => x._id == element.skuId);
                 if(sku)
                 {
                 skuName = sku.skuName;
@@ -145,7 +145,7 @@ router.post("/getProductDetail",auth,async(req,res)=>{
                 }
             }
         }
-        return res.status(200).send({skuName:skuName,errorMsg:"success",isError:false,productName:product.productName,productDesc:product.productDesc,productMainContent:productMainContent,productSkuList:productSkuList,stock:product.stock,isActive:product.isActive});
+        return res.status(200).send({maxPrice:product.maxPrice,minPrice:product.minPrice,skuName:skuName,errorMsg:"success",isError:false,productName:product.productName,productDesc:product.productDesc,productMainContent:productMainContent,productSkuList:productSkuList,stock:product.stock,isActive:product.isActive});
     }
     catch(err){
         logger.error(JSON.stringify(err));
@@ -161,11 +161,11 @@ router.post("/deleteProduct",auth,async(req,res)=>{
     {
         session.startTransaction();    
 
-        const product = await Product.findById(req.body.productId);      
+        let product = await Product.findOne({_id:req.body.productId});      
         if(product == null)return res.status(200).send({errorMsg:"not found product",isError:true});
         product = await product.remove({session});
 
-        const result = await ProductSku.remove({product:ObjectId(req.body.productId)},{session});
+        const result = await ProductSKU.remove({product:ObjectId(req.body.productId)},{session});
         const contentResult = await ProductContent.remove({product:ObjectId(req.body.productId)},{session});
         await session.commitTransaction();
         return res.status(200).send(product);
@@ -184,16 +184,13 @@ router.post("/updateProductDetail",auth,async(req,res)=>{
     try
     {
         session.startTransaction();    
-        const product = await Product.findById(req.body.productId);      
+        let product = await Product.findById(req.body.productId);      
         if(product == null)return res.status(200).send({errorMsg:"not found product",isError:true});
         if(req.body.productName != null &&req.body.productName == ""){
             product.productName  = req.body.productName
         }
         if(req.body.productDesc != null &&req.body.productDesc == ""){
             product.productDesc  = req.body.productDesc
-        }
-        if(req.body.imagePath != null &&req.body.imagePath == ""){
-            product.imagePath  = req.body.imagePath
         }
         if(req.body.isActive != product.isActive){
             product.isActive  = req.body.isActive
@@ -214,16 +211,16 @@ router.post("/updateProductDetail",auth,async(req,res)=>{
         const contentResult = await ProductContent.remove({product:ObjectId(req.body.productId)},{session});
         
         for (const element of req.body.productMainContent) {
-            element.product = productId;            
+            element.product = req.body.productId;            
        };
 
-        const result = await ProductSku.remove({product:ObjectId(req.body.productId)},{session});
+        const result = await ProductSKU.remove({product:ObjectId(req.body.productId)},{session});
         for (const element of req.body.productSku)
             {
-                let sku = new ProductSKU({stock:element.stock,fullPrice:element.fullPrice,product:productId,skuName:element.skuName,option:element.option,value:element.value,imagePath:element.imagePath});
+                let sku = new ProductSKU({stock:element.stock,fullPrice:element.fullPrice,product:req.body.productId,skuName:element.skuName,option:element.option,value:element.value,imagePath:element.imagePath});
                 sku = await sku.save({ session });
             var skuId = sku._id;
-                element.ProductSkuContent.product = productId;
+                element.ProductSkuContent.product = req.body.productId;
                 element.ProductSkuContent.skuId = skuId;
                 req.body.productMainContent.push(element.ProductSkuContent);
         };

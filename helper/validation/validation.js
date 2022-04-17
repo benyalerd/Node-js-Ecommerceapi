@@ -349,5 +349,6 @@ module.exports.ShopValidation = ShopValidation;
 module.exports.telValidation = telValidation;
 module.exports.emailValidation = emailValidation;
 module.exports.productValidation = productValidation;
+module.exports.transactionStatusValidation = transactionStatusValidation;
 
 

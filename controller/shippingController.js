@@ -7,8 +7,9 @@ const {auth} = require('../middleware/auth');
 const logger = winston.createLogger(logConfiguration);
 const {shippingValidation} = require('../helper/validation/validation');
 const ObjectId = require('mongodb').ObjectID;
+const {Shop} = require('../model/Shop');
 
-router.post("/getAllShipping",auth,async(req,res)=>{
+router.post("/getAllShipping",async(req,res)=>{
     try
     {
 let allShipping = await Shipping.find({shop:ObjectId(req.body.shopId)}).populate('master');
@@ -33,6 +34,8 @@ if(shop == null)return res.status(200).send({errorMsg:"not found shop",isError:t
 else if(shop.isActive != true || shop.isDelete != false){
     return res.status(200).send({errorMsg:"not found shop",isError:true});
 }
+const duplicateShipping = Shipping.find({shop:req.body.shopId,master:req.body.masterId})
+if(duplicateShipping == null) return res.status(200).send({errorMsg:"ขนส่งนี้มีการเพิ่มแล้ว",isError:true});
 let shipping = new Shipping({shop:req.body.shopId,master:req.body.masterId,price:req.body.price,minDay:req.body.minDay,maxDay:req.body.maxDay,masterName:req.body.masterName,masterImg:req.body.masterImg,createdDate:new Date(),createdBy:req.body.merchantId});
 shipping = await shipping.save();
 return res.status(200).send({shopId:shipping.shopId,masterId:shipping.masterId,price:shipping.price,minDay:shipping.minDay,maxDay:shipping.maxDay,errorMsg:"success",isError:false});
@@ -48,7 +51,7 @@ return res.status(200).send({shopId:shipping.shopId,masterId:shipping.masterId,p
 router.post("/editShipping",auth,async(req,res)=>{
     try
     {
-let shipping = await Shipping.findOne({_id:ObjectId(req.body.id)});
+let shipping = await Shipping.findOne({_id:req.body._id});
 if(shipping == null)return res.status(200).send({errorMsg:"not found shipping",isError:true});
 if(req.body.price!= null && req.body.price!= "")
 {
@@ -65,7 +68,7 @@ if(req.body.maxDay!= null && req.body.maxDay!= "")
 
 shipping.updatedBy = req.body.merchantId;
 shipping.updatedDate = new Date();
-shipping = await Shipping.save();
+shipping = await shipping.save();
 return res.status(200).send({errorMsg:"success",isError:false});
     }
     catch(err){
@@ -79,7 +82,7 @@ return res.status(200).send({errorMsg:"success",isError:false});
 router.post("/deleteShipping",auth,async(req,res)=>{
     try
     {
-let shipping = await Shipping.findOne({_id:ObjectId(req.body.id)});
+let shipping = await Shipping.findOne({_id:req.body._id});
 if(shipping == null)return res.status(200).send({errorMsg:"not found shipping",isError:true});
 
 shipping = await shipping.remove();

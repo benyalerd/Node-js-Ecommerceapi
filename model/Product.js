@@ -29,7 +29,8 @@ const Product = mongoose.model('Product', new mongoose.Schema({
     stock:{
         type:Number,
         min:0
-    }
+    },
+    imagePath:String
 }));
 
 module.exports.Product = Product;

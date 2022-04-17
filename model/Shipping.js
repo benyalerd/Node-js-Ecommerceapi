@@ -11,9 +11,9 @@ const Shipping = mongoose.model('Shipping', new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Master'
     },
-    Price:Number,
-    MaxDay:Number,
-    MinDay:Number,
+    price:Number,
+    maxDay:Number,
+    minDay:Number,
     createdDate:Date,
     createdBy:String,
 updatedDate:Date,

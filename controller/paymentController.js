@@ -92,10 +92,10 @@ return res.status(200).send({errorMsg:"success",isError:false});
 router.post("/deletePayment",auth,async(req,res)=>{
     try
     {
-let payment = await Payment.findOne({_id:ObjectId(req.body._id)});
+let payment = await Payment.findOne({_id:req.body._id});
 if(payment == null)return res.status(200).send({errorMsg:"not found payment",isError:true});
 
-payment = await Payment.remove();
+payment = await payment.remove();
 return res.status(200).send({errorMsg:"success",isError:false});
     }
     catch(err){

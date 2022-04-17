@@ -28,8 +28,8 @@ router.post("/searchTransaction",auth,async(req,res)=>{
            query["orderCode"] = { $regex: req.body.orderCode   }
        }
       
-       if(Object.keys(transactionType).includes(req.body.tabType)){
-        query["tranType"] = tranType;
+      if(req.body.tabType != 0){
+        query["tranType"] = req.body.tabType;
        }
        if(req.body.sortingValue != null &&req.body.sortingValue != "" )
        {
@@ -50,7 +50,7 @@ router.post("/searchTransaction",auth,async(req,res)=>{
         .skip(req.body.page*req.body.limit)
         .exec();
 
-        let totalRecord = await Product.find(query).count();
+        let totalRecord = await Transaction.find(query).count();
 
         if(transaction == null)return res.status(200).send({errorMsg:"",isError:false});
         return res.status(200).send({totalRecord:totalRecord,errorMsg:"success",isError:false,transactionList:transaction});
@@ -71,11 +71,9 @@ router.post("/getTransactionDetail",auth,async(req,res)=>{
         
         if(transaction == null)return res.status(200).send({errorMsg:"not found transaction",isError:true});
         
-        const transactionDetail = await TransactionDetail.findById(req.body.transactionId);
+        const transactionDetail = await TransactionDetail.find({transaction:ObjectId(req.body.transactionId)});
        
-        transaction["transactionDetail"] = transactionDetail;
-
-        return res.status(200).send(transaction);
+        return res.status(200).send({transaction:transaction,transactionDetail:transactionDetail,errorMsg:"success",isError:false});
     }
     catch(err){
         logger.error(JSON.stringify(err));
@@ -88,7 +86,7 @@ router.post("/getTransactionDetail",auth,async(req,res)=>{
 router.post("/updateTransactionDetail",auth,async(req,res)=>{
     try
     {
-        const transaction = await Product.findById(req.body.transactionId);      
+        let transaction = await Transaction.findById(req.body.transactionId);      
         if(transaction == null)return res.status(200).send({errorMsg:"not found transaction",isError:true});
         if(req.body.reason != null &&req.body.reason == ""){
             transaction.reason  = req.body.reason
@@ -98,7 +96,7 @@ router.post("/updateTransactionDetail",auth,async(req,res)=>{
             if(!isValid)return res.status(200).send({errorMsg:"status is incorrect",isError:true});
             transaction.tranType  = req.body.tranType
         }
-        if(req.body.trackingNumber!= null &&req.body.trackingNumber == "" ){
+        if(req.body.trackingNumber!= null &&req.body.trackingNumber != "" ){
             transaction.trackingNumber = req.body.trackingNumber
         }
         

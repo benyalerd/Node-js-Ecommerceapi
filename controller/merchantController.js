@@ -75,7 +75,7 @@ router.post("/getmerchant",auth,async(req,res)=>{
     else if(merchant.isActive != true || merchant.isDelete != false){
         return res.status(200).send({errorMsg:"not found merchant",isError:true});
     }
-    return res.status(200).send({errorMsg:"success",isError:false,email:merchant.email,name:merchant.name,lastname:merchant.lastname,tel:merchant.tel,id:merchant._id});
+    return res.status(200).send({errorMsg:"success",isError:false,role:merchant.role,email:merchant.email,name:merchant.name,lastname:merchant.lastname,tel:merchant.tel,id:merchant._id});
     }
     catch(err){
         logger.error(JSON.stringify(err));
