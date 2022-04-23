@@ -10,6 +10,13 @@ const Master = require('./controller/masterController');
 const Shipping = require('./controller/shippingController');
 const Product = require('./controller/productController');
 const Transaction = require('./controller/transactionController');
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("build"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname,  "build", "index.html"));
+  });
+}
 const port = process.env.PORT || 3000;
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({limit: '50mb'}));
