@@ -21,4 +21,8 @@ return res.status(200).send({masters:master,errorMsg:"success",isError:false});
     }
 });
 
+router.get("/MasterData",async()=>{
+    return res.status(200).send({errorMsg:"Yes",isError:true});
+});
+
 module.exports = router
