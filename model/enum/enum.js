@@ -1,5 +1,5 @@
 const transactionType = {
-    1: 1,
+    1: 'addToCart',
     2: 'waitingPayment',
     3: 'waitingApprovePayment',
     4: 'failedPayment',

@@ -57,6 +57,8 @@ router.post("/searchProduct",auth,async(req,res)=>{
 
         for (const element of product) {
             var path = await ProductContent.findOne( { "product": element._id,"contentType":1 } );         
+            
+            
             element.imagePath = path.imagePath;
             
         };
@@ -136,12 +138,19 @@ router.post("/getProductDetail",auth,async(req,res)=>{
                 productMainContent.push(element);
             }
             else if(element.contentType == 3){
-                var sku = ProductSKU.find(x => x._id == element.skuId);
+                var sku = productSku.find(x => x._id == element.skuId);
                 if(sku)
                 {
-                skuName = sku.skuName;
-               sku["ProductSkuContent"] = element;
-               productSkuList.push(sku);
+                  skuName = sku.skuName;
+                  var newSku = {
+                    "productSkuContent":element,
+                    "product":sku.product,
+                    "skuName":sku.skuName,
+                    "option":sku.option,
+                    "stock":sku.stock,
+                    "fullPrice":sku.fullPrice
+                  }
+                  productSkuList.push(newSku);
                 }
             }
         }

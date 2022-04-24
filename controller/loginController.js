@@ -15,7 +15,6 @@ router.post("/",async(req,res)=>{
 const {error} = emailValidation(req.body);
 if(error)return res.status(200).send({errorMsg:error.details[0].message,isError:true});
 var user = await Merchant.findOne({email:req.body.email});
-console.log('user ...'+JSON.stringify(user));
 if(!user)return res.status(200).send({errorMsg:"Invalid email or password.",isError:true});
 console.log(user.salt);
 const validatePassword = await HashPassword(req.body.password,user.salt);
