@@ -89,7 +89,7 @@ merchantValidation = function (body){
 });
 
 
-ShopValidation = function (body){
+shopValidation = function (body){
     try {
         const error = shopSchema.validate(body,options);
         return error;

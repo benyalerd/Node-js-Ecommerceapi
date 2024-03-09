@@ -4,7 +4,7 @@ const {Shop} = require('../model/Shop');
 const {Merchant} = require('../model/Merchant');
 const {logConfiguration} = require('../helper/logging/logging');
 const winston = require('winston');
-const {ShopValidation,emailValidation,telValidation} = require('../helper/validation/validation');
+const {shopValidation,emailValidation,telValidation} = require('../helper/validation/validation');
 const {auth} = require('../middleware/auth');
 const ObjectId = require('mongodb').ObjectID;
 const logger = winston.createLogger(logConfiguration);
@@ -12,7 +12,7 @@ router.post("/addshop",auth,async(req,res)=>{
     try
     {
         
-const {error} = ShopValidation(req.body);
+const {error} = shopValidation(req.body);
 if(error)return res.status(200).send({errorMsg:error.details[0].message,isError:true});
 if(req.body.email != null && req.body.email != ""){
    const {error} = emailValidation({email:req.body.email});
